@@ -1,6 +1,13 @@
 #include <iostream>
 #include "interface.h"
 
-void exibeDados(int, string, string);
-void exibeSaldo(float);
-void exibeErro(int);
+Interface::Interface(){
+        
+}
+
+Interface::~Interface(){
+}
+
+void Interface::tela_de_boot(){
+
+}
