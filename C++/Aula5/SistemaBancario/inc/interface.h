@@ -7,13 +7,13 @@ using namespace std;
 class Interface
 {
 private:
-    string status;
+    string *status_atual;
 public:
     Interface();
     ~Interface();
     
-    int getStatus(string *status);
-    int setStatus(string *status);
+    &string getStatus();
+    void setStatus(string &status);
 
     // Tela ao ligar o sistema
     void tela_de_boot();
