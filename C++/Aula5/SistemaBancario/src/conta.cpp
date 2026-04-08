@@ -1,5 +1,8 @@
 #include "conta.h"
 #include <iostream>
+#include "estados.h"
+
+using namespace std;
 
 Conta::Conta()
 {
@@ -9,19 +12,19 @@ Conta::Conta()
     this->saldo = 0;
 }
 
-Conta::Conta(int senha, int numero, std::string titular, std::string tipo, double saldo)
+Conta::Conta(int senha, int numero, string titular, string tipo, double saldo)
 {
     this->senha = senha;
     this->numero = numero;
     this->titular = titular;
     this->tipo = tipo;
-    if(saldo>0)
+    if(validaValor(saldo))
     {
         this->saldo = saldo;
     }
     else
     {
-        std::cout<<"Saldo inicial invalido"<<std::endl;
+        this->saldo = 0.0;
     }    
 }
 
@@ -29,70 +32,82 @@ Conta::~Conta()
 {
 }
 
-void Conta::exibeDados()
+int Conta::getSaldo(int senha, double &saldoSaida)
 {
-    std::cout<< "Titular: "<<this->titular<<std::endl;
-    std::cout<< "Numero: "<<this->numero<<std::endl;
-    std::cout<< "Tipo: "<<this->tipo<<std::endl;
-}
-
-double Conta::getSaldo(int senha)
-{
-    if(senha==this->senha)
+    if(validaSenha(senha))
     {
-        return this->saldo;
+        saldoSaida = this->saldo;
+        return SUCESSO;
     }
     else
     {
-        std::cout<<"Senha inválida"<<std::endl;
-        return -10000000;
+        saldoSaida = 0;
+        return SENHA_INVALIDA;
     }    
 
 }
 
-void Conta::setSaldo(double valor)
+int Conta::setSaldo(double valor)
 {
-    if(valor>0)
+    if(validaValor(valor))
+    {
         this->saldo = valor;
-    else
-        std::cout<<"Valor inválido"<<std::endl;
+        return SUCESSO;
+    }
+    else{
+        return VALOR_INVALIDO;
+    }
+        
 }
 
-void Conta::setSenha(int novaSenha)
+int Conta::setSenha(int senhaAntiga, int novaSenha)
 {
-    this->senha = novaSenha;
+    // tentar adicionar depois forma para fazer aquela confirmação de senha
+    if (validaSenha(senhaAntiga)){
+        this->senha = novaSenha;
+        return SUCESSO;
+    }
+    else{
+        return SENHA_INVALIDA;
+    }
 }
 
-void Conta::deposito(double valor)
+int Conta::deposito(double valor)
 {
-    if(valor>0)
+    if(validaValor(valor))
     {
         this->saldo+=valor;
+        return SUCESSO;
     }
     else
     {
-        std::cout<<"Valor invalido"<<std::endl;
+        return VALOR_INVALIDO;
     }
     
 }
 
-void Conta::saque(int senha, double valor)
+int Conta::saque(int senha, double valor)
 {
-    if(senha==this->senha)
+    if(validaSenha(senha))
     {
-        if(this->saldo>valor)
-        {
-            this->saldo-=valor;
-            std::cout<<"Saque de R$"<<valor<<" realizado com sucesso."<<std::endl;
+        if(validaValor(valor)){
+            if(this->saldo>valor)
+            {
+                this->saldo-=valor;
+                return SUCESSO;
+            }
+            else
+            {
+                return SALDO_INSUFICIENTE;
+            }    
         }
-        else
-        {
-            std::cout<<"Saldo insuficiente"<<std::endl;
-        }    
+        else{
+            return VALOR_INVALIDO;
+        }
     }
     else
     {
-        std::cout<<"Senha invalida"<<std::endl;
+        return SENHA_INVALIDA;
     }
     
 }
@@ -101,5 +116,11 @@ bool Conta::validaSenha(int senha)
 {
     return (this->senha == senha);   
 }
+
+bool Conta::validaValor(double valor)
+{
+    return (valor >=0);   
+}
+
 
 

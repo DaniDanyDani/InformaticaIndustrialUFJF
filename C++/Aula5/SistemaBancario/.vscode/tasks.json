@@ -14,7 +14,7 @@
         {
             "label": "run",
             "type":"shell",
-            "command": ".\\bin\\SistemaBancario.exe",
+            "command": "./bin/SistemaBancario",
             "dependsOn": "build"
         }
     ]

@@ -2,6 +2,8 @@
 #define CONTA_H
 #include <string>
 
+using namespace std;
+
 
 class Conta
 {
@@ -10,18 +12,18 @@ private:
     int senha;
 public:
     Conta();
-    Conta(int senha, int numero, std::string titular, std::string tipo, double saldo);
+    Conta(int senha, int numero, string titular, string tipo, double saldo);
     ~Conta();
     int numero;
-    std::string titular;
-    std::string tipo;
-    void exibeDados();
-    double getSaldo(int senha);
-    void setSaldo(double valor);
-    void setSenha(int novaSenha);
-    void deposito(double valor);
-    void saque(int senha, double valor);
+    string titular;
+    string tipo;
+    int getSaldo(int senha, double &saldoSaida);
+    int setSaldo(double valor);
+    int setSenha(int senhaAntiga, int novaSenha);
+    int deposito(double valor);
+    int saque(int senha, double valor);
     bool validaSenha(int senha);
+    bool validaValor(double saldo);
 
 };
 

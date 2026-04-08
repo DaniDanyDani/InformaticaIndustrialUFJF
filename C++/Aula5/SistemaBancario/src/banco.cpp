@@ -57,8 +57,8 @@ void Banco::atendimento() //Realiza o atendimento ao cliente(Função chamada na
             {
                 int op;
                 double valor;
-                cout << "Qual operacao deseja fazer? (1 - Saque, 2 - Deposito, 3 - Ver Saldo, 4 - Sair): ";
-                cin >> op;
+                cout << "Qual operacao deseja fazer? (1 - Saque, 2 - Deposito, 3 - Ver Saldo, 4 - transferencia, 5 - Sair): ";
+                cin >> op; // Digitar qualquer caractere invés de número buga o sistema
                 switch (op)
                 {
                 case 1:
@@ -66,16 +66,49 @@ void Banco::atendimento() //Realiza o atendimento ao cliente(Função chamada na
                     cin>>valor;
                     contaCliente->saque(senhain,valor);
                     break;
+                    // SAQUE AINDA ESTÁ ERRADO;
                 case 2:
                     cout << "Digite o valor: ";
                     cin>>valor;
                     contaCliente->deposito(valor);
                     break;
                 case 3:
-                    cout << "Saldo: R$ "<<contaCliente->getSaldo(senhain)<<endl;
+                    double saldoSaida;
+                    contaCliente->getSaldo(senhain, saldoSaida);
+                    cout << "Saldo: R$ "<<saldoSaida<<endl;
                     break;
+                    // PARA ENTRAR NO ATENDIMENTO EU PRECISO DE SENHA, MAS PARA FICAR MOSTRANDO NÃO PEDE
                 case 4:
+                    double transferencia;
+                    int conta;
+                    Conta *contaBeneficiario;
+
+                    cout << "Digite o numero da conta Beneficiada: ";
+                    cin >> conta;
+                    contaBeneficiario = this->buscaConta(numC); //Chama o Metodo buscaConta() do banco para achar o objeto conta que possui o numero numC
+                    if (contaCliente == nullptr)//Se não achar nenhuma conta que corresponda entra nesse if
+                    {
+                        cout << "Conta invalida" << endl;
+                        break;
+                    }
+
+                    cout << "Digite o valor da transferência: ";
+                    cin >> transferencia;
+                    contaCliente->saque(senhain,valor);
+
+
+
+                    break;
+
+                case 5:
                     atendimento = false;
+                    break;
+                
+                case 6:
+                    break;
+
+                default:
+                    cout<<"Opção Invalida"<<endl;
                     break;
                 }
             }
