@@ -9,11 +9,17 @@ class Banco
 {
 private:
     Conta contas[NUMCONTAS];//Cria um vetor de objetos do tipo Conta que pode armazenar até 100 contas
+    int qtd_contas;
+    int senha_mestra;
 public:
     Banco();
     ~Banco();
     Conta* buscaConta(int numero); //Metodo que retorna o endereço do objeto conta que possui o mesmo numero informado
-    void atendimento();
+    int atendimento_cliente();
+    int atendimento_funcionario();
+    int transferencia(Conta *origem, Conta *destino, double valor, int senha);
+    int cadastro(int senha, string titular, string tipo, double saldo);
+    void exibeStatus(int status);
 };
 
 

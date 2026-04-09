@@ -19,7 +19,7 @@ public:
     string tipo;
     int getSaldo(int senha, double &saldoSaida);
     int setSaldo(double valor);
-    int setSenha(int senhaAntiga, int novaSenha);
+    int setSenha(int senhaAntiga, int novaSenha, int confirmacaoSenha);
     int deposito(double valor);
     int saque(int senha, double valor);
     bool validaSenha(int senha);
